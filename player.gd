@@ -8,19 +8,15 @@ extends CharacterBody3D
 @export var jump_impulse = 20
 @export_range(0.0, 1.0) var mouse_sensitivity = 0.5
 
-var target_velocity = Vector3.ZERO
-
 @onready var _camera_pivot := $CameraPivot as Node3D
+
+var target_velocity = Vector3.ZERO
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		print("Mouse mode: ", Input.mouse_mode)
-		print("Mouse position: ", event.position)
-		print("Mouse relative: ", event.relative)
-		
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
 		_camera_pivot.rotate_x(deg_to_rad(-event.relative.y * mouse_sensitivity))
 		_camera_pivot.rotation.x = clamp(_camera_pivot.rotation.x, deg_to_rad(-90), deg_to_rad(45))
